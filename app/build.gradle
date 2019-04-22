@@ -1,0 +1,146 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_version.compileSdkVersion
+    defaultConfig {
+        applicationId "com.ccooy.app3"
+        minSdkVersion build_version.minSdkVersion
+        targetSdkVersion build_version.targetSdkVersion
+        versionCode build_version.versionCode
+        versionName build_version.versionName
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // support
+    implementation libs.support_v7
+    implementation libs.design
+    implementation libs.recyclerview
+    implementation libs.constraint
+    implementation libs.flexbox
+
+    implementation libs.kotlin_stdlib
+    implementation libs.kotlin_coroutines
+
+    // jetpack
+    implementation libs.arch_comp_extension
+    implementation libs.arch_comp_java8
+    implementation libs.arch_comp_livedata_rx
+    kapt libs.arch_comp_compiler
+
+    implementation libs.arch_comp_room
+    implementation libs.arch_comp_room_rxjava
+    kapt libs.arch_comp_room_compiler
+
+    implementation libs.arch_comp_paging
+    implementation libs.arch_comp_paging_rxjava
+
+    // retrofit
+    implementation libs.retrofit
+    implementation libs.retrofit_gson
+    implementation libs.retrofit_rxjava
+
+    // rx
+    implementation libs.rxkotlin
+    implementation libs.rxandroid
+    implementation libs.rxbinding
+    implementation libs.rxbinding_v7
+    implementation libs.rxbinding_recyclerview
+    implementation libs.rxpermissions
+    implementation libs.rxweaver
+
+    // autodispose
+    implementation libs.autodispose
+    implementation libs.autodispose_ktx
+    implementation libs.autodispose_android_ktx
+    implementation libs.autodispose_archs_ktx
+
+    // dagger
+    implementation libs.dagger
+    kapt libs.dagger_compiler
+
+    // dagger.android
+    implementation libs.dagger_android
+    implementation libs.dagger_android_support
+    kapt libs.dagger_android_processor
+
+    // okhttp
+    implementation libs.okhttp
+    implementation libs.okhttp_logging
+
+    // glide
+    implementation libs.glide
+    kapt libs.glide_compiler
+
+    // logger
+    implementation libs.timber
+
+    // LeakCanary
+    debugImplementation libs.leak_canary_debug
+    debugImplementation libs.leak_canary_debug_support
+    releaseImplementation libs.leak_canary_release
+
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.cpacm:floatingmusicmenu:1.0.0'
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.5'
+
+    // permissionDispatcher
+    implementation "org.permissionsdispatcher:permissionsdispatcher:latest.release"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:latest.release"
+
+    testImplementation libs.junit
+    testImplementation libs.mockito_kotlin
+    testImplementation libs.arch_comp_room_test
+    testImplementation libs.arch_comp_test
+    testImplementation libs.robolectric
+
+    androidTestImplementation libs.junit
+    androidTestImplementation libs.espresso_core
+    androidTestImplementation libs.espresso_contrib
+    androidTestImplementation libs.espresso_idling_resource
+    androidTestImplementation libs.espresso_test_runner
+    androidTestImplementation libs.espresso_test_rules
+    androidTestImplementation libs.arch_comp_room_test
+    androidTestImplementation libs.arch_comp_test
+}
+
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas".toString())
+    }
+}
