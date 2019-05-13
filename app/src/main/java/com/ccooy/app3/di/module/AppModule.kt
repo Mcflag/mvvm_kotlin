@@ -9,7 +9,6 @@ import com.ccooy.app3.base.AppConstants.BASE_URL
 import com.ccooy.app3.base.AppConstants.TIME_OUT_SECONDS
 import com.ccooy.app3.base.BaseApplication
 import com.ccooy.app3.base.loadings.CommonLoadingViewModel
-import com.ccooy.app3.base.loadings.ILoadingDelegate
 import com.ccooy.app3.binding.FabAnimateViewModel
 import com.ccooy.app3.data.local.db.AppDatabase
 import com.ccooy.app3.data.local.db.repo.LoginDatabaseRepository
@@ -18,11 +17,8 @@ import com.ccooy.app3.util.net.BasicAuthInterceptor
 import com.ccooy.app3.data.remote.GithubService
 import com.ccooy.app3.di.DatabaseInfo
 import com.ccooy.app3.di.PreferenceInfo
-import com.ccooy.app3.ui.splash.ISplashLocalDataSource
-import com.ccooy.app3.ui.splash.SplashLocalDataSource
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

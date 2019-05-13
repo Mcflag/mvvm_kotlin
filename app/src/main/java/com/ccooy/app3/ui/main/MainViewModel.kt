@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ccooy.app3.base.viewmodel.BaseViewModel
 import com.ccooy.app3.base.viewstate.SimpleViewState
+import com.ccooy.app3.data.local.prefs.PreferencesRepository
 import com.ccooy.app3.data.model.response.Repo
 import com.ccooy.app3.ext.livedata.toReactiveStream
 import com.ccooy.app3.ext.paging.IntPageKeyedData
@@ -17,6 +18,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repo: MainRepository
 ) : BaseViewModel() {
+
+    @Inject
+    lateinit var prefs: PreferencesRepository
 
     private val events: MutableLiveData<List<Repo>> = MutableLiveData()
     val sort: MutableLiveData<String> = MutableLiveData()
@@ -76,7 +80,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun queryReposAction(pageIndex: Int, pageSize: Int): Flowable<SimpleViewState<List<Repo>>> =
-        repo.queryRepos("googlesamples", pageIndex, pageSize, sort.value ?: sortByLetter)
+        repo.queryRepos(prefs.user.login, pageIndex, pageSize, sort.value ?: sortByLetter)
             .map { either ->
                 either.fold({
                     SimpleViewState.error<List<Repo>>(it)

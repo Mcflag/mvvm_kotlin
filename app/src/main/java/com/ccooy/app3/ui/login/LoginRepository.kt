@@ -3,7 +3,6 @@ package com.ccooy.app3.ui.login
 import com.ccooy.app3.base.repository.BaseRepositoryBoth
 import com.ccooy.app3.base.repository.ILocalDataSource
 import com.ccooy.app3.base.repository.IRemoteDataSource
-import com.ccooy.app3.data.cache.UserCache
 import com.ccooy.app3.data.local.db.repo.LoginDatabaseRepository
 import com.ccooy.app3.data.local.prefs.PreferencesRepository
 import com.ccooy.app3.data.model.db.LoginEntity
@@ -36,13 +35,17 @@ class LoginRepository @Inject constructor(
     remoteDataSource: ILoginRemoteDataSource,
     localDataSource: ILoginLocalDataSource
 ) : BaseRepositoryBoth<ILoginRemoteDataSource, ILoginLocalDataSource>(remoteDataSource, localDataSource) {
+
+    @Inject
+    lateinit var repo: PreferencesRepository
+
     fun login(username: String, password: String): Flowable<Either<Errors, LoginUser>> =
         remoteDataSource.login(username, password)
             .doOnNext { either ->
                 either.fold({
 
                 }, {
-                    UserCache.INSTANCE = it
+                    repo.user = it
                 })
             }
             .flatMap {

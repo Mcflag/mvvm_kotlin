@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-inline fun <reified T> SharedPreferences.gson(defaultValue: T, key: String? = null) =
+inline fun <reified T> SharedPreferences.gson(key: String? = null, defaultValue: T) =
     object : ReadWriteProperty<Any, T> {
         private val gson = Gson()
 
